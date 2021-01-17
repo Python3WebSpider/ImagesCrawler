@@ -32,6 +32,7 @@ class UnsplashSpider(Spider):
     page_max = 1000
     index_url_pattern = 'https://unsplash.com/napi/topics/{topic}/photos?page={page}&per_page={per_page}'
     detail_url_pattern = 'https://unsplash.com/napi/photos/{id}'
+    related_url_pattern = 'https://unsplash.com/napi/photos/{id}/related'
     custom_settings = {
         'MONGODB_DATABASE_NAME': 'images',
         'MONGODB_COLLECTION_NAME_DEFAULT': 'unsplash',
@@ -54,6 +55,16 @@ class UnsplashSpider(Spider):
             id = item.get('id')
             detail_url = self.detail_url_pattern.format(id=id)
             self.logger.debug('detail url %s', detail_url)
+            yield Request(detail_url, callback=self.parse_detail, priority=10)
+            related_url = self.related_url_pattern.format(id=id)
+            yield Request(related_url, callback=self.parse_related, priority=12)
+    
+    def parse_related(self, response):
+        items = json.loads(response.text)
+        for item in items.get('results'):
+            id = item.get('id')
+            detail_url = self.detail_url_pattern.format(id=id)
+            self.logger.debug('related detail url %s', detail_url)
             yield Request(detail_url, callback=self.parse_detail, priority=10)
     
     def parse_detail(self, response):

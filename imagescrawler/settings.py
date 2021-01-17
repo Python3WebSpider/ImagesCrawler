@@ -17,7 +17,7 @@ NEWSPIDER_MODULE = 'imagescrawler.spiders'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
-# DOWNLOAD_DELAY = 3
+# DOWNLOAD_DELAY =
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 # CONCURRENT_REQUESTS = 3
 
