@@ -92,3 +92,8 @@ SCHEDULER = "gerapy_redis.scheduler.Scheduler"
 DUPEFILTER_CLASS = "gerapy_redis.dupefilter.RFPDupeFilter"
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
+
+DOWNLOAD_TIMEOUT = 10
+RETRY_TIMES = 5
+
+LOG_LEVEL = 'INFO'
