@@ -54,7 +54,7 @@ class UnsplashSpider(Spider):
         for item in items:
             id = item.get('id')
             detail_url = self.detail_url_pattern.format(id=id)
-            self.logger.info('detail url %s', detail_url)
+            self.logger.debug('detail url %s', detail_url)
             yield Request(detail_url, callback=self.parse_detail, priority=10)
             related_url = self.related_url_pattern.format(id=id)
             yield Request(related_url, callback=self.parse_related, priority=12)
@@ -64,7 +64,7 @@ class UnsplashSpider(Spider):
         for item in items.get('results'):
             id = item.get('id')
             detail_url = self.detail_url_pattern.format(id=id)
-            self.logger.info('related detail url %s', detail_url)
+            self.logger.debug('related detail url %s', detail_url)
             yield Request(detail_url, callback=self.parse_detail, priority=10)
     
     def parse_detail(self, response):
